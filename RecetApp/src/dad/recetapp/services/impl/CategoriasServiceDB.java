@@ -16,8 +16,9 @@ import dad.recetapp.services.ServicioException;
 public class CategoriasServiceDB implements CategoriasService{
 
 	@Override
-	public void crearCategoria(CategoriaItem categoria) throws ServicioException, SQLException {
-		
+	public void crearCategoria(CategoriaItem categoria) throws ServicioException {
+		try {
+			
 		Connection conn = DataBase.getConnection();
 		Statement st =  conn.createStatement(); 
 			
@@ -28,30 +29,59 @@ public class CategoriasServiceDB implements CategoriasService{
         }
 		
 		PreparedStatement stmt = conn.prepareStatement("INSERT INTO categorias VALUES(?,?)");
-		//TODO ARREGLAR LA INSERCION
-		stmt.setInt(1, valor);
+		
+		if (valor == null) {
+			stmt.setInt(1, 1);
+		}
+		else{
+			stmt.setInt(1, valor);
+		}
 		stmt.setString(2, categoria.getDescripcion());
 		stmt.executeUpdate();
 		stmt.close();
-		
+		conn.close();
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	@Override
 	public void modificarCategoria(CategoriaItem categoria) throws ServicioException {
-		// TODO Auto-generated method stub
-		
+		try {
+			
+		Connection conn = DataBase.getConnection();
+		 
+		  PreparedStatement stmt = conn.prepareStatement("UPDATE categorias SET descripcion=? WHERE id=?");
+		 
+		  stmt.setString(1, categoria.getDescripcion());
+		  stmt.setLong(2,categoria.getId());
+
+		  stmt.executeUpdate();
+		  stmt.close();
+		  conn.close();
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	@Override
-	public void eliminarCategoria(Long id) throws ServicioException, SQLException {
+	public void eliminarCategoria(Long id) throws ServicioException{
+		try {
+			
 		
 		Connection conn = DataBase.getConnection();
 		PreparedStatement stmt = conn.prepareStatement("DELETE FROM categorias WHERE id = ?");
-		//TODO ARREGLAR LA INSERCION
+		
 		stmt.setLong(1, id);
 		stmt.executeUpdate();
 		stmt.close();
-		
+		conn.close();
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	@Override
@@ -62,17 +92,18 @@ public class CategoriasServiceDB implements CategoriasService{
 		try {
 			
 			Connection conn = DataBase.getConnection();
-			PreparedStatement stmt = conn.prepareStatement("select descripcion from categorias");
+			PreparedStatement stmt = conn.prepareStatement("select id,descripcion from categorias");
 			ResultSet rs = stmt.executeQuery();
 			
 			while (rs.next()) {
 				CategoriaItem categoria = new CategoriaItem();
-				categoria.setDescripcion(rs.getString(1));
+				categoria.setId(rs.getLong(1));
+				categoria.setDescripcion(rs.getString(2));
 				categorias.add(categoria);
 			}
 			rs.close();
 			stmt.close();
-			
+			conn.close();
 			arrayCategorias = categorias.toArray(new CategoriaItem[categorias.size()]);
 			
 		} catch (SQLException e) {e.printStackTrace();}
@@ -82,8 +113,27 @@ public class CategoriasServiceDB implements CategoriasService{
 
 	@Override
 	public CategoriaItem ObtenerCategoria(Long id) throws ServicioException {
-		// TODO Auto-generated method stub
-		return null;
+
+		CategoriaItem categoria = new CategoriaItem();
+		try {
+			
+		 
+		 Connection conn = DataBase.getConnection();
+		 PreparedStatement stmt = conn.prepareStatement("select id,descripcion from categorias where = ?");
+		 stmt.setLong(1, id);
+		 ResultSet rs = stmt.executeQuery();
+		 
+		 while (rs.next()) {
+		 categoria.setId(rs.getLong(1));
+		 categoria.setDescripcion(rs.getString(2));
+		 }
+		 rs.close();
+		 stmt.close();
+		 conn.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		 return categoria;
 	}
 
 	

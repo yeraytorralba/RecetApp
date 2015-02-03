@@ -2,8 +2,11 @@ package dad.recetapp.ui;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.table.AbstractTableModel;
+
 import dad.recetapp.items.CategoriaItem;
+import dad.recetapp.items.TipoAnotacionItem;
 import dad.recetapp.services.ServicesLocator;
 import dad.recetapp.services.ServicioException;
 
@@ -64,7 +67,21 @@ public class CategoriasTableModel extends AbstractTableModel{
 	
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return false;
+		return true;
 	}
+	@Override
+	 public void fireTableRowsUpdated(int firstRow, int lastRow) {
+	 super.fireTableRowsUpdated(firstRow, lastRow);
+	 
+	 CategoriaItem item = new CategoriaItem();
+	 item.setId(categorias.get(firstRow).getId());
+	 item.setDescripcion(categorias.get(firstRow).getDescripcion());
 
+	 try {
+	 ServicesLocator.getCategoriasService().modificarCategoria(item);
+	 } catch (ServicioException e) {
+	 // TODO Auto-generated catch block
+	 e.printStackTrace();
+	 }
+	 }
 }

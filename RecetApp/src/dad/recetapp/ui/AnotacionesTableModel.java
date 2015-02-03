@@ -64,7 +64,24 @@ public class AnotacionesTableModel extends AbstractTableModel{
 	
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return false;
+		return true;
 	}
+	@Override
+	 public void fireTableRowsUpdated(int firstRow, int lastRow) {
+	 super.fireTableRowsUpdated(firstRow, lastRow);
+	 
+	 TipoAnotacionItem item = new TipoAnotacionItem();
+	 item.setId(anotaciones.get(firstRow).getId());
+	 item.setDescripcion(anotaciones.get(firstRow).getDescripcion());
+	 
+	 try {
+	 ServicesLocator.getTiposAnotacionesService().modificarTipoAnotacion(item);
+	 } catch (ServicioException e) {
+	 // TODO Auto-generated catch block
+	 e.printStackTrace();
+	 }
+	 }
+	
+	
 
 }

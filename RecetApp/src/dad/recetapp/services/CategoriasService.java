@@ -6,9 +6,9 @@ import dad.recetapp.items.CategoriaItem;
 
 public interface CategoriasService {
 
-	public void crearCategoria(CategoriaItem categoria) throws ServicioException, SQLException;
+	public void crearCategoria(CategoriaItem categoria) throws ServicioException;
 	public void modificarCategoria(CategoriaItem categoria) throws ServicioException;
-	public void eliminarCategoria(Long id) throws ServicioException, SQLException;
+	public void eliminarCategoria(Long id) throws ServicioException;
 	public CategoriaItem[] ListarCategorias() throws ServicioException;
 	public CategoriaItem ObtenerCategoria(Long id) throws ServicioException;
 	

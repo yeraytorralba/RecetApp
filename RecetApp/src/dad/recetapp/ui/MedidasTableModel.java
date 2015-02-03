@@ -2,8 +2,11 @@ package dad.recetapp.ui;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.table.AbstractTableModel;
+
 import dad.recetapp.items.MedidaItem;
+import dad.recetapp.items.TipoAnotacionItem;
 import dad.recetapp.services.ServicesLocator;
 import dad.recetapp.services.ServicioException;
 
@@ -81,7 +84,22 @@ public class MedidasTableModel extends AbstractTableModel{
 	
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return false;
+		return true;
 	}
-
+	@Override
+	 public void fireTableRowsUpdated(int firstRow, int lastRow) {
+	 super.fireTableRowsUpdated(firstRow, lastRow);
+	 
+	 MedidaItem item = new MedidaItem();
+	 item.setId(medidas.get(firstRow).getId());
+	 item.setNombre(medidas.get(firstRow).getNombre());
+	 item.setAbreviatura(medidas.get(firstRow).getAbreviatura());
+	 
+	 try {
+	 ServicesLocator.getMedidasService().modificarMedida(item);
+	 } catch (ServicioException e) {
+	 // TODO Auto-generated catch block
+	 e.printStackTrace();
+	 }
+	 }
 }

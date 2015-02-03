@@ -436,7 +436,6 @@ public class MainFrame extends JFrame{
 			medidasTableModel.getMedidas().removeAll(eliminar);
 			medidasTableModel.fireTableDataChanged();
 			medidasTable.getSelectionModel().clearSelection();
-			
 		} else {
 			JOptionPane.showMessageDialog(this, "Debe seleccionar un libro","Editar Libro", JOptionPane.OK_OPTION);
 		}
@@ -465,15 +464,9 @@ public class MainFrame extends JFrame{
 		if (seleccionados.length > 0) {
 			List<Object> eliminar = new ArrayList<Object>();
 			for (int i : seleccionados) {
-				System.out.println(i);
-
 				i = anotacionesTable.convertRowIndexToModel(i);
-				System.out.println(i);
-
 				eliminar.add(anotacionesTableModel.getAnotaciones().get(i));
-				System.out.println(i);
-
-				ServicesLocator.getTiposAnotacionesService().eliminarTipoAnotacion(anotacionesTableModel.getAnotaciones().get(i).getId());
+				ServicesLocator.getTiposAnotacionesService().eliminarTipoAnotacion((anotacionesTableModel.getAnotaciones().get(i).getId()));
 			}
 			anotacionesTableModel.getAnotaciones().removeAll(eliminar);
 			anotacionesTableModel.fireTableDataChanged();

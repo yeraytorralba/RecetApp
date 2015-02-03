@@ -39,20 +39,22 @@ public class RecetasServiceDB implements RecetasService{
 		try {
 			
 			Connection conn = DataBase.getConnection();
-			PreparedStatement stmt = conn.prepareStatement("select nombre, para, tiempo_total, fecha_creacion, id_categoria from recetas");
+			PreparedStatement stmt = conn.prepareStatement("select id,nombre, para, tiempo_total, fecha_creacion, id_categoria from recetas");
 			ResultSet rs = stmt.executeQuery();
 			
 			while (rs.next()) {
 				RecetaItem receta = new RecetaItem();
-				receta.setNombre(rs.getString(1));
-				receta.setPara(rs.getString(2));
-				receta.setTiempoTotal(rs.getInt(3));
-				receta.setFechaCreacion(rs.getDate(4));
-				receta.setCategoria(rs.getLong(5));
+				receta.setId(rs.getLong(1));
+				receta.setNombre(rs.getString(2));
+				receta.setPara(rs.getString(3));
+				receta.setTiempoTotal(rs.getInt(4));
+				receta.setFechaCreacion(rs.getDate(5));
+				receta.setCategoria(rs.getLong(6));
 				recetasList.add(receta);
 			}
 			rs.close();
 			stmt.close();
+			conn.close();
 			
 			recetasListItem.setRecetas(recetasList);
 			
@@ -73,7 +75,5 @@ public class RecetasServiceDB implements RecetasService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 
 }

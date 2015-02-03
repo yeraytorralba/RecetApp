@@ -105,5 +105,5 @@ public class RecetasTableModel extends AbstractTableModel{
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		return false;
 	}
-
+	
 }

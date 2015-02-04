@@ -6,5 +6,8 @@
 	<classpathentry kind="lib" path="lib/pivot-core-2.0.4.jar"/>
 	<classpathentry kind="lib" path="lib/pivot-wtk-2.0.4.jar"/>
 	<classpathentry kind="lib" path="lib/pivot-wtk-terra-2.0.4.jar"/>
+	<classpathentry kind="lib" path="lib/pivot-charts-2.0.4.jar"/>
+	<classpathentry kind="lib" path="lib/pivot-web-2.0.4.jar"/>
+	<classpathentry kind="lib" path="lib/pivot-web-server-2.0.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

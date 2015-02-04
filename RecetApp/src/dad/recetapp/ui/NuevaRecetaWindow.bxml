@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:NuevaRecetaWindow bxml:id="anadirIngredienteDialog"
+	title="Nueva receta" maximized="true" xmlns:bxml="http://pivot.apache.org/bxml"
+	xmlns:content="org.apache.pivot.wtk.content" xmlns:ui="dad.recetapp.ui"
+	xmlns="org.apache.pivot.wtk">
+
+	<TablePane styles="{padding:8, horizontalSpacing:6}">
+		<columns>
+			<TablePane.Column width="1*" />
+		</columns>
+		<rows>
+			<TablePane.Row height="-1" />
+			<TablePane.Row height="-1" />
+			<TablePane.Row height="1*" />
+			<TablePane.Row height="-1" />
+			<TablePane.Row height="-1" />
+		</rows>
+
+
+
+		<TablePane.Row height="-1">
+			<FillPane>
+				<TablePane styles="{padding:8, horizontalSpacing:6}">
+					<columns>
+						<TablePane.Column width="1*" />
+					</columns>
+					<rows>
+						<TablePane.Row height="-1" />
+						<TablePane.Row height="-1" />
+						<TablePane.Row height="-1" />
+						<TablePane.Row height="-1" />
+						<TablePane.Row height="-1" />
+					</rows>
+
+					<TablePane.Row height="-1">
+						<FillPane>
+							<BoxPane styles="{horizontalAlignment:'left', verticalAlignment:'center'}">
+								<Label text="Nombre:  " />
+								<TextInput bxml:id="nombreText" />
+							</BoxPane>
+							<BoxPane styles="{horizontalAlignment:'right', verticalAlignment:'center'}">
+								<Label text="Tiempo total: " />
+								<Spinner preferredWidth="40" selectedIndex="0" bxml:id="spinnerTotalM">
+									<spinnerData>
+										<content:NumericSpinnerData
+											lowerBound="0" increment="1" />
+									</spinnerData>
+								</Spinner>
+								<Label text="M " />
+								<Spinner preferredWidth="40" selectedIndex="0" bxml:id="spinnerTotalS">
+									<spinnerData>
+										<content:NumericSpinnerData
+											lowerBound="0" increment="1" />
+									</spinnerData>
+								</Spinner>
+								<Label text="S " />
+							</BoxPane>
+						</FillPane>
+					</TablePane.Row>
+
+					<TablePane.Row height="-1">
+						<FillPane>
+							<Label text=" " />
+						</FillPane>
+					</TablePane.Row>
+
+					<TablePane.Row height="-1">
+						<FillPane>
+							<BoxPane
+								styles="{horizontalAlignment:'left', verticalAlignment:'center'}">
+								<Label text="Para:       " />
+								<TextInput bxml:id="paraText"/>
+								<ListButton listData="['Personas']" selectedIndex="0" bxml:id="paraCombo"/>
+							</BoxPane>
+							<BoxPane
+								styles="{horizontalAlignment:'right', verticalAlignment:'center'}">
+								<Label text="Tiempo con thermomix: " />
+								<Spinner preferredWidth="40" selectedIndex="0" bxml:id="spinnerThermoM">
+									<spinnerData>
+										<content:NumericSpinnerData
+											lowerBound="0" increment="1" />
+									</spinnerData>
+								</Spinner>
+								<Label text="M " />
+								<Spinner preferredWidth="40" selectedIndex="0" bxml:id="spinnerThermoS">
+									<spinnerData>
+										<content:NumericSpinnerData
+											lowerBound="0" increment="1" />
+									</spinnerData>
+								</Spinner>
+								<Label text="S " />
+							</BoxPane>
+						</FillPane>
+					</TablePane.Row>
+
+					<TablePane.Row height="-1">
+						<FillPane>
+							<Label text=" " />
+						</FillPane>
+					</TablePane.Row>
+
+					<TablePane.Row height="-1">
+						<FillPane>
+							<BoxPane
+								styles="{horizontalAlignment:'left', verticalAlignment:'center'}">
+								<Label text="Categoría " />
+								<ListButton bxml:id="categoriasListButton" />
+							</BoxPane>
+
+						</FillPane>
+					</TablePane.Row>
+
+				</TablePane>
+			</FillPane>
+		</TablePane.Row>
+
+		<TablePane.Row height="-1">
+			<FillPane>
+				<BoxPane>
+					<Label text=" " />
+				</BoxPane>
+				<BoxPane>
+					<Label text=" " />
+				</BoxPane>
+			</FillPane>
+		</TablePane.Row>
+
+		<TablePane.Row height="1*">
+			<FillPane>
+				<TabPane bxml:id="tabPaneNuevaReceta">
+					<FillPane>
+						<TabPane.tabData>
+							<content:ButtonData icon="/dad/recetapp/images/addTabIcon.png" />
+						</TabPane.tabData>
+						<Label text="Haga clic en el panel para crear una sección." /> 
+					</FillPane>
+				</TabPane>
+			</FillPane>
+		</TablePane.Row>
+
+		<TablePane.Row height="-1">
+			<FillPane>
+				<BoxPane>
+					<Label text=" " />
+				</BoxPane>
+				<BoxPane>
+					<Label text=" " />
+				</BoxPane>
+			</FillPane>
+		</TablePane.Row>
+
+		<TablePane.Row height="-1">
+			<FillPane>
+				<BoxPane styles="{horizontalAlignment:'right', verticalAlignment:'center'}">
+					<PushButton bxml:id="crearRecetaWindowButton"
+						buttonData="Crear" />
+					<PushButton bxml:id="cancelarRecetaWindowButton"
+						buttonData="Cancelar" />
+				</BoxPane>
+			</FillPane>
+		</TablePane.Row>
+
+
+	</TablePane>
+</ui:NuevaRecetaWindow>

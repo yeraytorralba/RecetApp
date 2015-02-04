@@ -79,7 +79,7 @@
 							</BoxPane>
 							<BoxPane
 								styles="{horizontalAlignment:'right', verticalAlignment:'center'}">
-								<Label text="Tiempo con thermomix: " />
+								<Label text="Tiempo con Thermomix: " />
 								<Spinner preferredWidth="40" selectedIndex="0"
 									bxml:id="spinnerThermoM">
 									<spinnerData>

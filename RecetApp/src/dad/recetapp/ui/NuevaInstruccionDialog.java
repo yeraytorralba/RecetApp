@@ -32,8 +32,7 @@ public class NuevaInstruccionDialog extends Dialog implements Bindable {
 
 	InstruccionItem instruccion;
 	
-	public void initialize(Map<String, Object> namespace, URL location,
-			Resources resources) {
+	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
 		
 		instruccion = new InstruccionItem();
 

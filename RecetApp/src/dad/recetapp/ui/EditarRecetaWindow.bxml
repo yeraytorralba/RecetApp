@@ -71,7 +71,7 @@
 									<ListButton listData="['Personas', 'Unidades']" selectedIndex="0" bxml:id="paraCombo"/>
 								</BoxPane>
 								<BoxPane styles="{horizontalAlignment:'right', verticalAlignment:'center'}">
-									<Label  text="Tiempo con thermomix: "/>
+									<Label  text="Tiempo con Thermomix: "/>
 									<Spinner preferredWidth="40" selectedIndex="0" bxml:id="spinnerThermoM">
 					                        <spinnerData>
 					                            <content:NumericSpinnerData lowerBound="0" increment="1"/>

@@ -10,12 +10,14 @@
 			<TablePane.Column width="1*"/>
 		</columns>
 		<rows>
+		
 			<TablePane.Row height="1*"/>
 			<TablePane.Row height="1*" />
 			<TablePane.Row height="1*"/>
 		</rows>
 
 		<TablePane.Row height="-1">
+		
 			<BoxPane styles="{horizontalAlignment:'center', verticalAlignment:'center'}">
 				<Label text="Descripción: "/>
 				<TextInput bxml:id="descripcionText"/>
@@ -30,7 +32,8 @@
 			</BoxPane>		       			 					        
 		</TablePane.Row>	
 									        
-		<TablePane.Row height="1*" >	
+		<TablePane.Row height="1*" >
+		<Border styles="{padding:0}">	
 			<ScrollPane horizontalScrollBarPolicy="fill_to_capacity">
             <TableView bxml:id="tableView" styles="{includeTrailingVerticalGridLine:true}" selectMode="MULTI">
                 <columns>
@@ -49,7 +52,8 @@
             <columnHeader>
                 <TableViewHeader tableView="$tableView" sortMode="single_column" />
             </columnHeader>
-        	</ScrollPane>						       			 					        
+        	</ScrollPane>		
+        	</Border>				       			 					        
 		</TablePane.Row>
 	
 </ui:CategoriasPanel>

@@ -91,7 +91,7 @@ public class NuevoIngredienteDialog extends Dialog implements Bindable {
 		// ----------------------------------------------------
 		TipoIngredienteItem tipoIngredienteTitle = new TipoIngredienteItem();
 		tipoIngredienteTitle.setId(null);
-		tipoIngredienteTitle.setNombre("<Seleccione el tipo de instruccion>");
+		tipoIngredienteTitle.setNombre("<Seleccione el tipo de ingrediente>");
 		tiposIngredientesBD = convertirList(ServiceLocator
 				.getTiposIngredientesService().listarTiposIngredientes());
 		tiposIngredientesBD.insert(tipoIngredienteTitle, 0);

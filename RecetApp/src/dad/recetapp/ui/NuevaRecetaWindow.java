@@ -92,7 +92,7 @@ public class NuevaRecetaWindow extends Window implements Bindable {
 
 	private void crearReceta() {
 		if (nombreText.getText().equals("") || paraText.getText().equals("") || categoriasListButton.getSelectedItem().toString().equals("<Seleccione una categoría>")) {
-			Prompt error = new Prompt("Los campos: nombre, cantidad y categoría son obligatorios.");
+			Prompt error = new Prompt("Los campos \"Nombre\", \"Para\" y \"Categoría\" son obligatorios.");
 			error.open(this.getWindow(), new SheetCloseListener() {
 				public void sheetClosed(Sheet sheet) {
 				}
@@ -114,6 +114,7 @@ public class NuevaRecetaWindow extends Window implements Bindable {
 			}
 			try {
 				ServiceLocator.getRecetasService().crearReceta(receta);
+				RecetappFrame.setNumReceta();
 			} catch (ServiceException e) {
 				Prompt error = new Prompt("Error al crear la receta.");
 				error.open(this.getWindow(), new SheetCloseListener() {
@@ -150,7 +151,6 @@ public class NuevaRecetaWindow extends Window implements Bindable {
 		} catch (IOException | SerializationException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	@SuppressWarnings("static-access")

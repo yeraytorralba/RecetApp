@@ -62,6 +62,7 @@ public class ComponenteReceta extends FillPane implements Bindable {
 			@SuppressWarnings("static-access")
 			@Override
 			public boolean keyTyped(Component arg0, char arg1) {
+				
 				if (parent instanceof NuevaRecetaWindow){
 					try {
 						((NuevaRecetaWindow) parent).cambiarTituloPestana(seccionText.getText());
@@ -75,6 +76,7 @@ public class ComponenteReceta extends FillPane implements Bindable {
 					} catch (NullPointerException e) {
 					}
 				}
+				
 				return false;
 			}
 		});
@@ -313,5 +315,19 @@ public class ComponenteReceta extends FillPane implements Bindable {
 
 	public void setParent(Window parent){
 		this.parent = parent;
+	}
+	
+	public void setSeccionText(String texto){
+		this.seccionText.setText(texto);
+	}
+	
+	public void setVariablesIngredientes(org.apache.pivot.collections.List<IngredienteItem> ingredientes){
+		this.variablesIngredientes = ingredientes;
+		ingredientesTable.setTableData(variablesIngredientes);
+	}
+	
+	public void setVariablesInstrucciones(org.apache.pivot.collections.List<InstruccionItem> instrucciones){
+		this.variablesInstrucciones = instrucciones;
+		instruccionesTable.setTableData(variablesInstrucciones);
 	}
 }

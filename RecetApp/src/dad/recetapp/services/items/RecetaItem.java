@@ -81,7 +81,7 @@ public class RecetaItem {
 	}
 
 	public List<AnotacionItem> getAnotaciones() {
-		if (anotaciones == null) { 
+		if (anotaciones == null) {
 			anotaciones = new ArrayList<AnotacionItem>();
 		}
 		return anotaciones;
@@ -93,7 +93,7 @@ public class RecetaItem {
 		}
 		return secciones;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof RecetaItem) {
@@ -102,7 +102,7 @@ public class RecetaItem {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public String toString() {
 		return nombre;

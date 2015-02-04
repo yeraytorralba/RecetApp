@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:EditarInstruccionDialog bxml:id="editarInstruccionDialog" modal="false" title="Editar instrucción"
+<ui:EditarInstruccionDialog bxml:id="editarInstruccionDialog" modal="true"
     xmlns:bxml="http://pivot.apache.org/bxml"
     xmlns:content="org.apache.pivot.wtk.content"
     xmlns:ui="dad.recetapp.ui"
@@ -22,7 +22,7 @@
 		<TablePane.Row height="-1">
 			<BoxPane styles="{horizontalAlignment:'right', verticalAlignment:'center'}">
 				<Label text="Orden:                "/>
-				<TextInput bxml:id="ordenText"/>
+				<TextInput/>
 			</BoxPane>
 		</TablePane.Row>
 		
@@ -35,14 +35,12 @@
 		<TablePane.Row height="-1">
 			<BoxPane styles="{horizontalAlignment:'left', verticalAlignment:'top'}">
 				<Label  text="Descripcion: " />
-				<Border styles="{padding:0}">
 				<ScrollPane horizontalScrollBarPolicy="fill"
                             verticalScrollBarPolicy="fill_to_capacity"
                             preferredWidth="240"
                             preferredHeight="100">
-                            <TextArea bxml:id="descripcionText"/>
+                            <TextArea/>
                 </ScrollPane>
-                </Border>
 			</BoxPane>
 		</TablePane.Row>
 		<TablePane.Row height="-1">
@@ -53,7 +51,7 @@
 		
 		<TablePane.Row height="-1">
 			<BoxPane styles="{horizontalAlignment:'right', verticalAlignment:'center'}">
-				<PushButton buttonData="Guardar" bxml:id="editarInstruccionButton"/>
+				<PushButton buttonData="Editar" bxml:id="editarInstruccionButton"/>
 				<PushButton buttonData="Cancelar" bxml:id="cancelarInstruccionButton"/>
 			</BoxPane>
 		</TablePane.Row>

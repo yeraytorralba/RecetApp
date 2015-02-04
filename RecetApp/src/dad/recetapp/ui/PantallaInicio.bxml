@@ -6,7 +6,7 @@
     xmlns="org.apache.pivot.wtk" >
  
 	<BoxPane styles="{horizontalAlignment:'center', verticalAlignment:'center'}">
-	 		<ImageView bxml:id ="imagenInicio" image="/dad/recetapp/images/recetapp-inicio.png" />
+	 		<ImageView bxml:id ="imagenInicio" image="/dad/recetapp/ui/images/recetapp-inicio.png" />
 	</BoxPane>
 	     
 </ui:PantallaInicio>

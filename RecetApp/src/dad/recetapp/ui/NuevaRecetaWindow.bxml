@@ -34,20 +34,24 @@
 
 					<TablePane.Row height="-1">
 						<FillPane>
-							<BoxPane styles="{horizontalAlignment:'left', verticalAlignment:'center'}">
+							<BoxPane
+								styles="{horizontalAlignment:'left', verticalAlignment:'center'}">
 								<Label text="Nombre:  " />
 								<TextInput bxml:id="nombreText" />
 							</BoxPane>
-							<BoxPane styles="{horizontalAlignment:'right', verticalAlignment:'center'}">
+							<BoxPane
+								styles="{horizontalAlignment:'right', verticalAlignment:'center'}">
 								<Label text="Tiempo total: " />
-								<Spinner preferredWidth="40" selectedIndex="0" bxml:id="spinnerTotalM">
+								<Spinner preferredWidth="40" selectedIndex="0"
+									bxml:id="spinnerTotalM">
 									<spinnerData>
 										<content:NumericSpinnerData
 											lowerBound="0" increment="1" />
 									</spinnerData>
 								</Spinner>
 								<Label text="M " />
-								<Spinner preferredWidth="40" selectedIndex="0" bxml:id="spinnerTotalS">
+								<Spinner preferredWidth="40" selectedIndex="0"
+									bxml:id="spinnerTotalS">
 									<spinnerData>
 										<content:NumericSpinnerData
 											lowerBound="0" increment="1" />
@@ -69,20 +73,23 @@
 							<BoxPane
 								styles="{horizontalAlignment:'left', verticalAlignment:'center'}">
 								<Label text="Para:       " />
-								<TextInput bxml:id="paraText"/>
-								<ListButton listData="['Personas']" selectedIndex="0" bxml:id="paraCombo"/>
+								<TextInput bxml:id="paraText" />
+								<ListButton listData="['Personas', 'Unidades']"
+									selectedIndex="0" bxml:id="paraCombo" />
 							</BoxPane>
 							<BoxPane
 								styles="{horizontalAlignment:'right', verticalAlignment:'center'}">
 								<Label text="Tiempo con thermomix: " />
-								<Spinner preferredWidth="40" selectedIndex="0" bxml:id="spinnerThermoM">
+								<Spinner preferredWidth="40" selectedIndex="0"
+									bxml:id="spinnerThermoM">
 									<spinnerData>
 										<content:NumericSpinnerData
 											lowerBound="0" increment="1" />
 									</spinnerData>
 								</Spinner>
 								<Label text="M " />
-								<Spinner preferredWidth="40" selectedIndex="0" bxml:id="spinnerThermoS">
+								<Spinner preferredWidth="40" selectedIndex="0"
+									bxml:id="spinnerThermoS">
 									<spinnerData>
 										<content:NumericSpinnerData
 											lowerBound="0" increment="1" />
@@ -130,9 +137,8 @@
 				<TabPane bxml:id="tabPaneNuevaReceta">
 					<FillPane>
 						<TabPane.tabData>
-							<content:ButtonData icon="/dad/recetapp/images/addTabIcon.png" />
+							<content:ButtonData icon="/dad/recetapp/ui/images/addTabIcon.png" />
 						</TabPane.tabData>
-						<Label text="Haga clic en el panel para crear una sección." /> 
 					</FillPane>
 				</TabPane>
 			</FillPane>

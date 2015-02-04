@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:NuevoIngredienteDialog bxml:id="nuevoIngredienteDialog" modal="false" title="Nuevo ingrediente"
+<ui:NuevoIngredienteDialog bxml:id="nuevoIngredienteDialog" modal="true" title="Nuevo ingrediente"
     xmlns:bxml="http://pivot.apache.org/bxml"
     xmlns:content="org.apache.pivot.wtk.content"
     xmlns:ui="dad.recetapp.ui"
@@ -19,6 +19,8 @@
 			<TablePane.Row height="-1" />
 			<TablePane.Row height="-1"/>
 			<TablePane.Row height="-1" />
+			<TablePane.Row height="-1"/>
+			<TablePane.Row height="-1"/>
 			<TablePane.Row height="-1"/>
 		</rows>
 
@@ -74,6 +76,17 @@
 			</BoxPane>
 		</TablePane.Row>
 
+		<TablePane.Row height="-1">
+			<BoxPane>
+				<Label  text=""/>
+			</BoxPane>
+		</TablePane.Row>
+		
+		<TablePane.Row height="-1">
+			<BoxPane styles="{horizontalAlignment:'center', verticalAlignment:'center'}">
+				<Label bxml:id="errorLabel" styles = "{color:'RED'}"/>
+			</BoxPane>
+		</TablePane.Row>
 	 </TablePane>
 	 
 </ui:NuevoIngredienteDialog>

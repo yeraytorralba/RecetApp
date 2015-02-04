@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:EditarIngredienteDialog bxml:id="editarIngredienteDialog" modal="false" title="Editar ingrediente"
+<ui:EditarIngredienteDialog bxml:id="editarIngredienteDialog" modal="true"
     xmlns:bxml="http://pivot.apache.org/bxml"
     xmlns:content="org.apache.pivot.wtk.content"
     xmlns:ui="dad.recetapp.ui"
@@ -23,9 +23,9 @@
 		</rows>
 
 		<TablePane.Row height="-1">
-			<BoxPane styles="{horizontalAlignment:'left', verticalAlignment:'center'}">
-				<Label  text="Cantidad:       "/>
-				<TextInput bxml:id="cantidadText"/>
+			<BoxPane styles="{horizontalAlignment:'center', verticalAlignment:'center'}">
+				<Label  text="Cantidad: "/>
+				<TextInput />
 			</BoxPane>
 		</TablePane.Row>
 		
@@ -37,8 +37,8 @@
 		
 		<TablePane.Row height="-1">
 			<BoxPane styles="{horizontalAlignment:'left', verticalAlignment:'center'}">
-				<Label  text="Medida:           " />
-				<Label  text="" /><ListButton bxml:id="medidasListButton" />
+				<Label  text="Medida: " />
+				<Label  text="          " /><ListButton listData="[' Seleccione la medida ', 'medida1','medida2']" selectedIndex="0" />
 			</BoxPane>
 		</TablePane.Row>
 		
@@ -51,7 +51,7 @@
 		<TablePane.Row height="-1">
 			<BoxPane styles="{horizontalAlignment:'left', verticalAlignment:'center'}">
 				<Label  text="Tipo: " />
-				<Label  text="" /><ListButton bxml:id="tipoIngredienteListButton" />
+				<Label  text="                   " /><ListButton listData="[' Seleccione el tipo ', 'tipo1','tipo2']" selectedIndex="0" />
 			</BoxPane>
 		</TablePane.Row>
 		

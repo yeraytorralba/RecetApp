@@ -22,7 +22,7 @@
 				</BoxPane>
 				<BoxPane styles="{horizontalAlignment:'right', verticalAlignment:'center'}">
 					<PushButton bxml:id="eliminarPestanaButton">
-						<content:ButtonData icon="/dad/recetapp/images/closeTabIcon.png" />
+						<content:ButtonData icon="/dad/recetapp/ui/images/closeTabIcon.png" />
 					</PushButton>
 				</BoxPane>
 
@@ -89,13 +89,13 @@
 								<BoxPane
 									styles="{horizontalAlignment:'right', verticalAlignment:'center'}">
 									<PushButton bxml:id="anadirIngredienteButton">
-										<content:ButtonData icon="/dad/recetapp/images/add-icon.png" />
+										<content:ButtonData icon="/dad/recetapp/ui/images/add-icon-20x20.png" />
 									</PushButton>
 									<PushButton bxml:id="editarIngredienteButton">
-										<content:ButtonData icon="/dad/recetapp/images/edit-icon.png" />
+										<content:ButtonData icon="/dad/recetapp/ui/images/edit-icon-20x20.png" />
 									</PushButton>
 									<PushButton bxml:id="eliminarIngredienteButton">
-										<content:ButtonData icon="/dad/recetapp/images/delete-icon.png" />
+										<content:ButtonData icon="/dad/recetapp/ui/images/delete-icon-20x20.png" />
 									</PushButton>
 								</BoxPane>
 							</TablePane.Row>
@@ -143,13 +143,13 @@
 								<BoxPane
 									styles="{horizontalAlignment:'right', verticalAlignment:'center'}">
 									<PushButton bxml:id="anadirInstruccionButton">
-										<content:ButtonData icon="/dad/recetapp/images/add-icon.png" />
+										<content:ButtonData icon="/dad/recetapp/ui/images/add-icon-20x20.png" />
 									</PushButton>
 									<PushButton bxml:id="editarInstruccionButton">
-										<content:ButtonData icon="/dad/recetapp/images/edit-icon.png" />
+										<content:ButtonData icon="/dad/recetapp/ui/images/edit-icon-20x20.png" />
 									</PushButton>
 									<PushButton bxml:id="eliminarInstruccionButton">
-										<content:ButtonData icon="/dad/recetapp/images/delete-icon.png" />
+										<content:ButtonData icon="/dad/recetapp/ui/images/delete-icon-20x20.png" />
 									</PushButton>
 								</BoxPane>
 							</TablePane.Row>

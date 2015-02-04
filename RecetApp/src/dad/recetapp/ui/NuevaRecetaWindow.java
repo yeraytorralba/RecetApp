@@ -17,6 +17,9 @@ import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.ComponentMouseButtonListener;
 import org.apache.pivot.wtk.ListButton;
+import org.apache.pivot.wtk.Prompt;
+import org.apache.pivot.wtk.Sheet;
+import org.apache.pivot.wtk.SheetCloseListener;
 import org.apache.pivot.wtk.Spinner;
 import org.apache.pivot.wtk.TabPane;
 import org.apache.pivot.wtk.TextInput;
@@ -28,7 +31,6 @@ import dad.recetapp.services.items.CategoriaItem;
 import dad.recetapp.services.items.RecetaItem;
 import dad.recetapp.services.items.RecetaListItem;
 
-
 public class NuevaRecetaWindow extends Window implements Bindable {
 
 	@BXML
@@ -38,24 +40,23 @@ public class NuevaRecetaWindow extends Window implements Bindable {
 	@BXML
 	public static TabPane tabPaneNuevaReceta;
 
-
 	private static org.apache.pivot.collections.List<CategoriaItem> categoriasBD;
 
 	@BXML
 	private TextInput nombreText, paraText;
 	@BXML
-	private Spinner spinnerThermoS, spinnerThermoM, spinnerTotalS, spinnerTotalM;
+	private Spinner spinnerThermoS, spinnerThermoM, spinnerTotalS,
+	spinnerTotalM;
 	@BXML
 	private static ListButton categoriasListButton, paraCombo;
+	public org.apache.pivot.collections.List<RecetaListItem> variables;
 
 	private static List<ComponenteReceta> componentes;
 
 	@Override
-	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
-
+	public void initialize(Map<String, Object> namespace, URL location,Resources resources) {
 		componentes = new ArrayList<ComponenteReceta>();
-
-		//crearNuevoPanelComponente();
+		crearNuevoPanelComponente();
 
 		try {
 			recargarCategoriaListButton();
@@ -64,86 +65,74 @@ public class NuevaRecetaWindow extends Window implements Bindable {
 			e.printStackTrace();
 		}
 
-		tabPaneNuevaReceta.getComponentMouseButtonListeners().add(new ComponentMouseButtonListener() {
-			@Override
-			public boolean mouseUp(Component arg0,
-					org.apache.pivot.wtk.Mouse.Button arg1, int arg2, int arg3) {
-				return false;
-			}
-
-			@Override
-			public boolean mouseDown(Component arg0,
-					org.apache.pivot.wtk.Mouse.Button arg1, int arg2, int arg3) {
-				return false;
-			}
-
-			@Override
-			public boolean mouseClick(Component arg0, org.apache.pivot.wtk.Mouse.Button arg1, int arg2, int arg3, int arg4) {
-				if (tabPaneNuevaReceta.getSelectedIndex() == tabPaneNuevaReceta.getTabs().getLength()-1) {
-					crearNuevoPanelComponente();
-				}
-				return false;
-			}
-		});
+		tabPaneNuevaReceta.getComponentMouseButtonListeners().add(new ComponentMouseButtonListener.Adapter() {
+					@Override
+					public boolean mouseClick(Component arg0,org.apache.pivot.wtk.Mouse.Button arg1, int arg2,int arg3, int arg4) {
+						if (tabPaneNuevaReceta.getSelectedIndex() == tabPaneNuevaReceta.getTabs().getLength()-1) {
+							crearNuevoPanelComponente();
+						}
+						return false;
+					}
+				});
 
 		cancelarRecetaWindowButton.getButtonPressListeners().add(new ButtonPressListener() {
-			@Override
-			public void buttonPressed(Button arg0) {
-				close();
-			}
-		});
+					@Override
+					public void buttonPressed(Button arg0) {
+						close();
+					}
+				});
 
 		crearRecetaWindowButton.getButtonPressListeners().add(new ButtonPressListener() {
-			@Override
-			public void buttonPressed(Button arg0) {
-				crearReceta();
-			}
-		});
+					@Override
+					public void buttonPressed(Button arg0) {
+						crearReceta();
+					}
+				});
 	}
 
-	private void crearReceta(){
-
-		if(nombreText.getText().equals("") || paraText.getText().equals("") || categoriasListButton.getSelectedItem().toString().equals("<Seleccione una categoría>")){
-			System.out.println("El nombre, cantidad, para y categoria son obligatorios.");
-		}
-		else{
-
+	private void crearReceta() {
+		if (nombreText.getText().equals("") || paraText.getText().equals("") || categoriasListButton.getSelectedItem().toString().equals("<Seleccione una categoría>")) {
+			Prompt error = new Prompt("Los campos: nombre, cantidad y categoría son obligatorios.");
+			error.open(this.getWindow(), new SheetCloseListener() {
+				public void sheetClosed(Sheet sheet) {
+				}
+			});
+		} else {
 			RecetaItem receta = new RecetaItem();
 			receta.setNombre(nombreText.getText());
 			receta.setCantidad(Integer.parseInt(paraText.getText()));
 			receta.setCategoria((CategoriaItem) categoriasListButton.getSelectedItem());
 			receta.setPara(paraCombo.getSelectedItem().toString());
 			receta.setFechaCreacion(new Date());
-			receta.setTiempoThermomix(spinnerThermoM.getSelectedIndex()*60 + spinnerThermoS.getSelectedIndex());
-			receta.setTiempoTotal(spinnerTotalM.getSelectedIndex()*60 + spinnerTotalS.getSelectedIndex());
+			receta.setTiempoThermomix(spinnerThermoM.getSelectedIndex() * 60 + spinnerThermoS.getSelectedIndex());
+			receta.setTiempoTotal(spinnerTotalM.getSelectedIndex() * 60 + spinnerTotalS.getSelectedIndex());
 
-			//TODO
 			for (ComponenteReceta componente : componentes) {
-				receta.getSecciones().add(componente.getSeccion());
+				if(!componente.getSeccion().getNombre().equals("")){
+					receta.getSecciones().add(componente.getSeccion());
+				}
 			}
-
-			Long id = null;
-
 			try {
-				id = ServiceLocator.getRecetasService().crearReceta(receta);
-
+				ServiceLocator.getRecetasService().crearReceta(receta);
 			} catch (ServiceException e) {
-				System.out.println("Error al crear la receta");
+				Prompt error = new Prompt("Error al crear la receta.");
+				error.open(this.getWindow(), new SheetCloseListener() {
+					public void sheetClosed(Sheet sheet) {
+					}
+				});
 			}
 
 			RecetaListItem recetaListItem = new RecetaListItem();
-			recetaListItem.setId(id);
+			recetaListItem.setId(receta.getId());
 			recetaListItem.setNombre(nombreText.getText());
 			recetaListItem.setCantidad(Integer.parseInt(paraText.getText()));
 			recetaListItem.setCategoria(categoriasListButton.getSelectedItem().toString());
 			recetaListItem.setPara(paraCombo.getSelectedItem().toString());
 			recetaListItem.setFechaCreacion(new Date());
-			recetaListItem.setTiempoThermomix(spinnerThermoM.getSelectedIndex()*60 + spinnerThermoS.getSelectedIndex());
-			recetaListItem.setTiempoTotal(spinnerTotalM.getSelectedIndex()*60 + spinnerTotalS.getSelectedIndex());
+			recetaListItem.setTiempoThermomix(spinnerThermoM.getSelectedIndex()* 60 + spinnerThermoS.getSelectedIndex());
+			recetaListItem.setTiempoTotal(spinnerTotalM.getSelectedIndex() * 60 + spinnerTotalS.getSelectedIndex());
 
-			RecetasPanel.variables.add(recetaListItem);
-			RecetasPanel.tableView.setTableData(RecetasPanel.variables);
-
+			variables.add(recetaListItem);
 			close();
 		}
 	}
@@ -153,12 +142,9 @@ public class NuevaRecetaWindow extends Window implements Bindable {
 			URL bxmlUrl = getClass().getResource("ComponenteReceta.bxml");
 			BXMLSerializer serializer = new BXMLSerializer();
 			ComponenteReceta componenteReceta = (ComponenteReceta) serializer.readObject(bxmlUrl);
-
-			tabPaneNuevaReceta.getTabs().insert(componenteReceta, tabPaneNuevaReceta.getLength()-2);
+			componenteReceta.setParent(this);
+			tabPaneNuevaReceta.getTabs().insert(componenteReceta,tabPaneNuevaReceta.getLength() - 2);
 			tabPaneNuevaReceta.setSelectedTab(componenteReceta);
-
-			componenteReceta.setName("componente"+tabPaneNuevaReceta.getSelectedIndex());
-
 			componentes.add(componenteReceta);
 
 		} catch (IOException | SerializationException e) {
@@ -168,27 +154,24 @@ public class NuevaRecetaWindow extends Window implements Bindable {
 	}
 
 	@SuppressWarnings("static-access")
-	public static void cambiarTituloPestana(String titulo){
-		tabPaneNuevaReceta.setTabData(tabPaneNuevaReceta.getSelectedTab(), titulo);
+	public void cambiarTituloPestana(String titulo) {
+		tabPaneNuevaReceta.setTabData(tabPaneNuevaReceta.getSelectedTab(),titulo);
 	}
 
-	public static void eliminarPestanaActual(){
-		
+	public static void eliminarPestanaActual() {
 		if (tabPaneNuevaReceta.getTabs().getLength() > 0) {
 			int posicion = tabPaneNuevaReceta.getSelectedIndex();
 			if (posicion == 0) {
 				tabPaneNuevaReceta.setSelectedIndex(posicion+1);
-			}
-			else{
+			} else {
 				tabPaneNuevaReceta.setSelectedIndex(posicion-1);
 			}
 			componentes.remove(posicion);
-			tabPaneNuevaReceta.getTabs().remove(posicion,1);
-		}
-		else if(tabPaneNuevaReceta.getTabs().getLength() == 2){
+			tabPaneNuevaReceta.getTabs().remove(posicion, 1);
+		} else if (tabPaneNuevaReceta.getTabs().getLength()==2) {
 
 			tabPaneNuevaReceta.setSelectedIndex(tabPaneNuevaReceta.getTabs().getLength()-1);
-			tabPaneNuevaReceta.getTabs().remove(tabPaneNuevaReceta.getSelectedIndex()-1,1);
+			tabPaneNuevaReceta.getTabs().remove(tabPaneNuevaReceta.getSelectedIndex()-1, 1);
 			componentes.remove(tabPaneNuevaReceta.getSelectedIndex()-1);
 		}
 	}
@@ -205,12 +188,16 @@ public class NuevaRecetaWindow extends Window implements Bindable {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	protected static org.apache.pivot.collections.List convertirList(java.util.List<?> listaUtil){
+	protected static org.apache.pivot.collections.List convertirList(java.util.List<?> listaUtil) {
 		org.apache.pivot.collections.List listaApache = new org.apache.pivot.collections.ArrayList();
-		for(int i = 0; i<listaUtil.size(); i++){
+		for (int i = 0; i < listaUtil.size(); i++) {
 			listaApache.add(listaUtil.get(i));
 		}
 		return listaApache;
 	}
-
+	
+	public void setVariables(org.apache.pivot.collections.List<RecetaListItem> variables){
+		this.variables = variables;
+	}
+	
 }

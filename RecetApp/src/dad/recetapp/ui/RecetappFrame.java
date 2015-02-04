@@ -22,8 +22,9 @@ public class RecetappFrame extends Window implements Bindable {
 	
     @Override
     public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
-    	recetappFrame.setIcon("/dad/recetapp/images/logo.png");
+    	recetappFrame.setIcon("/dad/recetapp/ui/images/logo.png");
     	setNumReceta();
+    	
     }
     
     public static void setNumReceta(){

@@ -35,9 +35,8 @@ import dad.recetapp.services.items.RecetaListItem;
 
 public class RecetasPanel extends FillPane implements Bindable {
 
-	@BXML 
+	@BXML
 	private SplitPane splitPane;
-	
 	@BXML
 	public static TableView tableView;
 	public static org.apache.pivot.collections.List<RecetaListItem> variables;
@@ -51,20 +50,19 @@ public class RecetasPanel extends FillPane implements Bindable {
 	private Button eliminarRecetaButton;
 	@BXML
 	private Button editarRecetaButton;
-
 	@BXML
 	private TextInput filtrarNombre;
 	@BXML
-	private Spinner filtrarMinutos,filtrarSegundos;
-	
+	private Spinner filtrarMinutos, filtrarSegundos;
+
 	@SuppressWarnings({ "unchecked" })
 	@Override
-	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
-		
+	public void initialize(Map<String, Object> namespace, URL location,Resources resources) {
+
 		variables = new org.apache.pivot.collections.ArrayList<RecetaListItem>();
 
 		filtrarDatosTabla();
-		
+
 		try {
 			lista = convertirList(ServiceLocator.getRecetasService().listarRecetas());
 		} catch (ServiceException e) {
@@ -73,36 +71,33 @@ public class RecetasPanel extends FillPane implements Bindable {
 		for (RecetaListItem l : lista) {
 			variables.add(l);
 		}
-		
 		tableView.setTableData(variables);
-		
 		try {
 			recargarCategoriaListButton();
-
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
 
 		anadirRecetaButton.getButtonPressListeners().add(new ButtonPressListener() {
-			@Override
-			public void buttonPressed(Button button) {
-				onAnadirRecetaButtonActionPerformed();
-			}
-		});
+					@Override
+					public void buttonPressed(Button button) {
+						onAnadirRecetaButtonActionPerformed();
+					}
+				});
 
 		eliminarRecetaButton.getButtonPressListeners().add(new ButtonPressListener() {
-			@Override
-			public void buttonPressed(Button button) {
-				onEliminarRecetaButtonActionPerformed();
-			}
-		});
+					@Override
+					public void buttonPressed(Button button) {
+						onEliminarRecetaButtonActionPerformed();
+					}
+				});
 
 		editarRecetaButton.getButtonPressListeners().add(new ButtonPressListener() {
-			@Override
-			public void buttonPressed(Button button) {
-				onEditarRecetaButtonActionPerformed();
-			}
-		});
+					@Override
+					public void buttonPressed(Button button) {
+						onEditarRecetaButtonActionPerformed();
+					}
+				});
 	}
 
 	protected void onAnadirRecetaButtonActionPerformed() {
@@ -110,25 +105,25 @@ public class RecetasPanel extends FillPane implements Bindable {
 
 		try {
 			nuevaRecetaWindow = (NuevaRecetaWindow) RecetappApplication.loadWindow("dad/recetapp/ui/NuevaRecetaWindow.bxml");
+			nuevaRecetaWindow.setVariables(variables);
+			nuevaRecetaWindow.open(getDisplay());
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (SerializationException e) {
 			e.printStackTrace();
 		}
-
-		nuevaRecetaWindow.open(getDisplay());
-
+		recargarTabla();
 	}
 
 	protected void onEditarRecetaButtonActionPerformed() {
 		Sequence<?> seleccionados = tableView.getSelectedRows();
-		if(seleccionados.getLength() == 0 || seleccionados.getLength() > 1){
-			Prompt error = new Prompt(MessageType.ERROR, "Debe selecionar una receta", new ArrayList<String>("OK"));
+		if (seleccionados.getLength() == 0 || seleccionados.getLength() > 1) {
+			Prompt error = new Prompt("Debe seleccionar una receta.");
 			error.open(this.getWindow(), new SheetCloseListener() {
-				public void sheetClosed(Sheet sheet) {}
+				public void sheetClosed(Sheet sheet) {
+				}
 			});
-		}
-		else{
+		} else {
 			EditarRecetaWindow editarRecetaWindow = null;
 			try {
 				editarRecetaWindow = (EditarRecetaWindow) RecetappApplication.loadWindow("dad/recetapp/ui/EditarRecetaWindow.bxml");
@@ -139,15 +134,16 @@ public class RecetasPanel extends FillPane implements Bindable {
 			}
 			editarRecetaWindow.open(getDisplay());
 		}
+		recargarTabla();
 	}
-
 
 	protected void onEliminarRecetaButtonActionPerformed() {
 		Sequence<?> seleccionados = tableView.getSelectedRows();
-		if(seleccionados.getLength() == 0){
-			Prompt error = new Prompt(MessageType.ERROR, "Debe selecionar una receta", new ArrayList<String>("OK"));
+		if (seleccionados.getLength() == 0) {
+			Prompt error = new Prompt("Debe seleccionar una receta.");
 			error.open(this.getWindow(), new SheetCloseListener() {
-				public void sheetClosed(Sheet sheet) {}
+				public void sheetClosed(Sheet sheet) {
+				}
 			});
 		} else {
 			StringBuffer mensaje = new StringBuffer();
@@ -158,26 +154,31 @@ public class RecetasPanel extends FillPane implements Bindable {
 				mensaje.append(" - " + recetaSeleccionada.getNombre() + "\n");
 			}
 
-			Prompt confirmar = new Prompt(MessageType.WARNING, mensaje.toString(), new ArrayList<String>("Sí", "No"));
+			Prompt confirmar = new Prompt(MessageType.WARNING,
+					mensaje.toString(), new ArrayList<String>("Sí", "No"));
 			confirmar.open(this.getWindow(), new SheetCloseListener() {
 				public void sheetClosed(Sheet sheet) {
 
-					if (confirmar.getResult() && confirmar.getSelectedOption().equals("Sí")) {
+					if (confirmar.getResult()
+							&& confirmar.getSelectedOption().equals("Sí")) {
 						Sequence<?> seleccionados = tableView.getSelectedRows();
 						for (int i = 0; i < seleccionados.getLength(); i++) {
 							try {
 								RecetaListItem recetaSeleccionada = (RecetaListItem) seleccionados.get(i);
 								variables.remove(recetaSeleccionada);
+								System.out.println("antes");
 								ServiceLocator.getRecetasService().eliminarReceta(recetaSeleccionada.getId());
+								System.out.println("despues");
 								RecetappFrame.setNumReceta();
 							} catch (ServiceException e) {
 								e.printStackTrace();
 							}
-						}	
-					}			
+						}
+					}
 				}
 			});
 		}
+		recargarTabla();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -185,99 +186,99 @@ public class RecetasPanel extends FillPane implements Bindable {
 		CategoriaItem categoriaTitle = new CategoriaItem();
 		categoriaTitle.setId(null);
 		categoriaTitle.setDescripcion("<Categorías>");
-		categoriasBD = convertirList(ServiceLocator.getCategoriasService().listarCategorias());
+		categoriasBD = convertirList(ServiceLocator.getCategoriasService()
+				.listarCategorias());
 		categoriasBD.insert(categoriaTitle, 0);
 		categoriasListButton.setListData(categoriasBD);
 		categoriasListButton.setSelectedItem(categoriaTitle);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	protected static org.apache.pivot.collections.List convertirList(java.util.List<?> listaUtil){
+	protected static org.apache.pivot.collections.List convertirList(
+			java.util.List<?> listaUtil) {
 		org.apache.pivot.collections.List listaApache = new org.apache.pivot.collections.ArrayList();
-		for(int i = 0; i<listaUtil.size(); i++){
+		for (int i = 0; i < listaUtil.size(); i++) {
 			listaApache.add(listaUtil.get(i));
 		}
 		return listaApache;
 	}
-	
-	//FILTRO
-	protected void filtrarDatosTabla(){
-		filtrarSegundos.getSpinnerSelectionListeners().add(new SpinnerSelectionListener() {
-			
-			@Override
-			public void selectedItemChanged(Spinner arg0, Object arg1) {
-				filtroTabla();
-				
-			}
-			
-			@Override
-			public void selectedIndexChanged(Spinner arg0, int arg1) {
-				filtroTabla();
-				
-			}
-		});
-			
-		
-		
-	filtrarMinutos.getSpinnerSelectionListeners().add(new SpinnerSelectionListener() {
-		
-		@Override
-		public void selectedItemChanged(Spinner arg0, Object arg1) {
-			filtroTabla();
-			
-		}
-		
-		@Override
-		public void selectedIndexChanged(Spinner arg0, int arg1) {
-			filtroTabla();
-			
-		}
-	});
-		 
-		
-	filtrarNombre.getComponentKeyListeners().add(new ComponentKeyListener.Adapter(){
-			@Override
-			public boolean keyTyped(Component arg0, char arg1) {
-				try {
-					
-					filtroTabla();
-				
-				} catch (NullPointerException e) {
-				}
-				
-				return false;
-			}
 
-		});
-		
-		
-		
-	categoriasListButton.getListButtonSelectionListeners().add(new ListButtonSelectionListener.Adapter() {
-		         @Override
-		         public void selectedItemChanged(ListButton listButton, Object previousSelectedItem) {
-		        	 filtroTabla();
-		         }
-			  });
+	// FILTRO
+	protected void filtrarDatosTabla() {
+		filtrarSegundos.getSpinnerSelectionListeners().add(
+				new SpinnerSelectionListener() {
+
+					@Override
+					public void selectedItemChanged(Spinner arg0, Object arg1) {
+						filtroTabla();
+					}
+
+					@Override
+					public void selectedIndexChanged(Spinner arg0, int arg1) {
+						filtroTabla();
+					}
+				});
+
+		filtrarMinutos.getSpinnerSelectionListeners().add(
+				new SpinnerSelectionListener() {
+					@Override
+					public void selectedItemChanged(Spinner arg0, Object arg1) {
+						filtroTabla();
+					}
+
+					@Override
+					public void selectedIndexChanged(Spinner arg0, int arg1) {
+						filtroTabla();
+					}
+				});
+
+		filtrarNombre.getComponentKeyListeners().add(
+				new ComponentKeyListener.Adapter() {
+					@Override
+					public boolean keyTyped(Component arg0, char arg1) {
+						try {
+							filtroTabla();
+						} catch (NullPointerException e) {
+						}
+						return false;
+					}
+				});
+
+		categoriasListButton.getListButtonSelectionListeners().add(
+				new ListButtonSelectionListener.Adapter() {
+					@Override
+					public void selectedItemChanged(ListButton listButton,
+							Object previousSelectedItem) {
+						filtroTabla();
+					}
+				});
+	}
+
+	@SuppressWarnings("unchecked")
+	protected void filtroTabla() {
+
+		CategoriaItem selectedItem = (CategoriaItem) categoriasListButton
+				.getSelectedItem();
+		Integer tiempoFinal = (filtrarMinutos.getSelectedIndex() * 60)
+				+ filtrarSegundos.getSelectedIndex();
+		if (tiempoFinal == 0) {
+			tiempoFinal = null;
+		}
+
+		if (selectedItem != null) {
+			try {
+				lista = convertirList(ServiceLocator.getRecetasService()
+						.buscarRecetas(filtrarNombre.getText(), tiempoFinal,
+								selectedItem.getId()));
+			} catch (ServiceException e) {
+				e.printStackTrace();
+			}
+		}
+		tableView.setTableData(lista);
 	}
 	
-	@SuppressWarnings("unchecked")
-	protected void filtroTabla(){
-		
-		 CategoriaItem  selectedItem = (CategoriaItem) categoriasListButton.getSelectedItem();
-			Integer tiempoFinal=(filtrarMinutos.getSelectedIndex()*60)+filtrarSegundos.getSelectedIndex();
-			if (tiempoFinal==0){tiempoFinal=null;}  
-   	
-			if (selectedItem != null) {
-					
-				try {
-					lista=	convertirList( ServiceLocator.getRecetasService().buscarRecetas(filtrarNombre.getText(), tiempoFinal, selectedItem.getId()));
-				} catch (ServiceException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-				tableView.setTableData(lista);
-		
+	protected void recargarTabla(){
+		tableView.setTableData(variables);
 	}
 
 }

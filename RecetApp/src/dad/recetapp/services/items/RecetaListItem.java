@@ -98,27 +98,27 @@ public class RecetaListItem {
 	public String getTiempoFormateado() {
 		int segundos, minutos;
 
-		minutos = tiempoTotal/60;
-		segundos = tiempoTotal%60; 
+		minutos = tiempoTotal / 60;
+		segundos = tiempoTotal % 60;
 
-		if(minutos == 0 && segundos == 0){
+		if (minutos == 0 && segundos == 0) {
 			return "Desconocido";
-		}
-		else if(minutos != 0 && segundos == 0){
+		} else if (minutos != 0 && segundos == 0) {
 			return minutos + "M";
-		}
-		else if(minutos == 0 && segundos != 0){
+		} else if (minutos == 0 && segundos != 0) {
 			return segundos + "S";
 		}
 
 		return minutos + "M " + segundos + "S ";
 	}
 
-	public String getFechaFormateada(){
+	public String getFechaFormateada() {
 		Calendar calendario = Calendar.getInstance();
 		calendario.setTime(fechaCreacion);
 
-		String fechaFormateada = "" + calendario.get(Calendar.DAY_OF_MONTH) + "/" + (calendario.get(Calendar.MONTH)+1) + "/" + calendario.get(Calendar.YEAR);
+		String fechaFormateada = "" + calendario.get(Calendar.DAY_OF_MONTH)
+				+ "/" + (calendario.get(Calendar.MONTH) + 1) + "/"
+				+ calendario.get(Calendar.YEAR);
 
 		return fechaFormateada;
 	}

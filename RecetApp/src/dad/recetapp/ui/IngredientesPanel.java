@@ -79,7 +79,7 @@ public class IngredientesPanel extends TablePane implements Bindable {
 
 	protected void onAnadirIngredienteButtonActionPerformed() {
 		if(nombreText.getText().equals("")){
-			Prompt error = new Prompt(MessageType.ERROR, "El nombre del instruccion no puede estar vacío", new ArrayList<String>("OK"));
+			Prompt error = new Prompt(MessageType.ERROR, "El nombre del ingrediente no puede estar vacío", new ArrayList<String>("OK"));
 			error.open(this.getWindow(), new SheetCloseListener() {
 				public void sheetClosed(Sheet sheet) {}
 			});
@@ -101,13 +101,13 @@ public class IngredientesPanel extends TablePane implements Bindable {
 	protected void onEliminarIngredienteButtonActionPerformed() {
 		Sequence<?> seleccionados = tableView.getSelectedRows();
 		if(seleccionados.getLength() == 0){
-			Prompt error = new Prompt(MessageType.ERROR, "Debe selecionar un tipo de instruccion", new ArrayList<String>("OK"));
+			Prompt error = new Prompt(MessageType.ERROR, "Debe selecionar un tipo de ingrediente", new ArrayList<String>("OK"));
 			error.open(this.getWindow(), new SheetCloseListener() {
 				public void sheetClosed(Sheet sheet) {}
 			});
 		} else {
 			StringBuffer mensaje = new StringBuffer();
-			mensaje.append("¿Desea eliminar los siguientes tipos de instruccion?\n\n");
+			mensaje.append("¿Desea eliminar los siguientes tipos de ingrediente?\n\n");
 
 			for (int i = 0; i < seleccionados.getLength(); i++) {
 				TipoAnotacionItem tipoIngredienteSeleccionado = (TipoAnotacionItem) seleccionados.get(i);

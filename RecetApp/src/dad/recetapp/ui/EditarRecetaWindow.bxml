@@ -68,7 +68,7 @@
 								<BoxPane styles="{horizontalAlignment:'left', verticalAlignment:'center'}">
 									<Label  text="Para:       "/>
 									<TextInput bxml:id="paraText"/>
-									<ListButton listData="['Personas']" selectedIndex="0" bxml:id="paraCombo"/>
+									<ListButton listData="['Personas', 'Unidades']" selectedIndex="0" bxml:id="paraCombo"/>
 								</BoxPane>
 								<BoxPane styles="{horizontalAlignment:'right', verticalAlignment:'center'}">
 									<Label  text="Tiempo con thermomix: "/>
@@ -122,14 +122,10 @@
 	    	<TablePane.Row height="1*">
 	    		<FillPane>
 	    			<TabPane bxml:id="tabPaneEditarReceta">
-						
 	    				<FillPane>
 							<TabPane.tabData>
-								<content:ButtonData icon="/dad/recetapp/images/addTabIcon.png"/>
+								<content:ButtonData icon="/dad/recetapp/ui/images/addTabIcon.png"/>
 	    					</TabPane.tabData>
-	    					
-	    					<Label text="Haga clic en el panel para crear una sección." /> 
-	    					
 	    				</FillPane>
 	    			</TabPane>
 	    		</FillPane>

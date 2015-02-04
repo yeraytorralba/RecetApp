@@ -11,39 +11,43 @@ import org.apache.pivot.wtk.Display;
 import org.apache.pivot.wtk.Window;
 import dad.recetapp.ui.PantallaInicio;
 
-public class RecetappApplication implements Application{
-	
+public class RecetappApplication implements Application {
+
 	private PantallaInicio pantallaInicio = null;
-	
-	public static Window loadWindow(String bxmlFile) throws IOException, SerializationException {
-		URL bxmlUrl = RecetappApplication.class.getClassLoader().getResource(bxmlFile);
+
+	public static Window loadWindow(String bxmlFile) throws IOException,
+			SerializationException {
+		URL bxmlUrl = RecetappApplication.class.getClassLoader().getResource(
+				bxmlFile);
 		BXMLSerializer serializer = new BXMLSerializer();
 		return (Window) serializer.readObject(bxmlUrl);
 	}
-	
+
 	@Override
-	public void startup(Display display, Map<String, String> properties) throws Exception {
-		
+	public void startup(Display display, Map<String, String> properties)
+			throws Exception {
+
 		pantallaInicio = (PantallaInicio) loadWindow("dad/recetapp/ui/PantallaInicio.bxml");
 		pantallaInicio.open(display);
 		pantallaInicio.setTitle("RecetApp");
-		pantallaInicio.setIcon("/dad/recetapp/images/logo.png");
+		pantallaInicio.setIcon("/dad/recetapp/ui/images/logo.png");
 	}
-	
+
 	@Override
 	public boolean shutdown(boolean optional) throws Exception {
-		
-		if (pantallaInicio != null) 
+
+		if (pantallaInicio != null)
 			pantallaInicio.close();
-		
+
 		return false;
 	}
-	
-	@Override
-	public void resume() throws Exception {}
-
 
 	@Override
-	public void suspend() throws Exception {}
+	public void resume() throws Exception {
+	}
+
+	@Override
+	public void suspend() throws Exception {
+	}
 
 }
